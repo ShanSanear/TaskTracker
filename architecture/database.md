@@ -2,22 +2,29 @@
 erDiagram
 
   issues {
-    INTEGER IssueID "AUTOINCREMENT"
-    NVARCHAR Summary "NOT NULL"
-    NVARCHAR Description
-    user ReporterID
-    user AssigneeID
-    project ProjectID
+    INTEGER issue_id "AUTOINCREMENT"
+    NVARCHAR summary "NOT NULL"
+    NVARCHAR description
+    DATE creation_date
+    DATE modification_date
+    state current_state
+    user reporter_id
+    user assignee_id
+    project project_id
   }
   
   project {
-    NVARCHAR Name "NOT NULL"
-    NVARCHAR Key "NOT NULL"
-    INTEGER ProjectID "AUTOINCREMENT"
+    NVARCHAR name "NOT NULL"
+    NVARCHAR key "NOT NULL"
+    INTEGER project_id "AUTOINCREMENT"
+  }
+  
+  state {
+    NVARCHAR state_name "NOT NULL"
   }
   
   user {
-    UUID UserID "AUTOINCREMENT"
+    UUID user_id "AUTOINCREMENT"
     NVARCHAR name "NOT NULL"
     NVARCHAR mail "NOT NULL"
     list_role roles
@@ -29,10 +36,16 @@ erDiagram
     list_permission permissions
   }
   
+  permission {
+    NVARCHAR permission_name
+  }
   
-  issues ||--o{ project : "ProjectID"
-  issues ||--o{ user : "ReporterID"
-  issues ||--o{ user : "AssigneeID"
+  
+  issues ||--o{ project : "project_id"
+  issues ||--o{ user : "reporter_id"
+  issues ||--o{ user : "assignee_id"
+  issues ||--o{ state : "current_state"
   user ||--o{ role : "roles"
+  role ||--o{ permission : "list_permissions"
 
 ```
