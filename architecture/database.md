@@ -13,17 +13,17 @@ erDiagram
     project project_id
   }
   
-  project {
+  projects {
     NVARCHAR name "NOT NULL"
     NVARCHAR key "NOT NULL"
     INTEGER project_id "AUTOINCREMENT"
   }
   
-  state {
+  states {
     NVARCHAR state_name "NOT NULL"
   }
   
-  user {
+  users {
     UUID user_id "AUTOINCREMENT"
     NVARCHAR name "NOT NULL"
     NVARCHAR mail "NOT NULL"
@@ -31,21 +31,21 @@ erDiagram
     
   }
   
-  role {
+  roles {
     NVARCHAR name
     list_permission permissions
   }
   
-  permission {
+  permissions {
     NVARCHAR permission_name
   }
   
   
-  issues ||--o{ project : "project_id"
-  issues ||--o{ user : "reporter_id"
-  issues ||--o{ user : "assignee_id"
-  issues ||--o{ state : "current_state"
-  user ||--o{ role : "roles"
-  role ||--o{ permission : "list_permissions"
+  issues ||--o{ projects : "project_id"
+  issues ||--o{ users : "reporter_id"
+  issues ||--o{ users : "assignee_id"
+  issues ||--o{ states : "current_state"
+  users ||--o{ roles : "roles"
+  roles ||--o{ permissions : "list_permissions"
 
 ```
