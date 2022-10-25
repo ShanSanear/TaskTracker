@@ -1,9 +1,0 @@
-services:
-  api:
-    build:
-      context: ../..
-    volumes:
-      - ./:/code
-    ports:
-      - "80:80"
-    container_name: "tasktracker-api"

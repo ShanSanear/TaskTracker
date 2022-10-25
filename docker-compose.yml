@@ -1,0 +1,28 @@
+services:
+  api:
+    build:
+      context: .
+    volumes:
+      - ./:/code
+    ports:
+      - "80:80"
+    depends_on:
+      - db
+    container_name: "tasktracker-api"
+    command: bash -c 'while !</dev/tcp/db/5432; do sleep 1; done; /root/.local/bin/poetry run uvicorn api.main:api --proxy-headers --host 0.0.0.0 --port 80'
+    environment:
+      - DYNACONF_DB_STRING=postgresql://tasktracker_api:tasktracker_api@db:5432/tasktracker_api
+  db:
+    image: postgres:13-alpine
+    volumes:
+      - postgres_data:/var/lib/postgresql/data/
+    expose:
+      - 5432
+    environment:
+      - POSTGRES_USER=tasktracker_api
+      - POSTGRES_PASSWORD=tasktracker_api
+      - POSTGRES_DB=tasktracker_api
+
+volumes:
+  postgres_data:
+
