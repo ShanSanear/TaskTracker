@@ -27,6 +27,7 @@ erDiagram
     UUID user_id "AUTOINCREMENT"
     NVARCHAR name "NOT NULL"
     NVARCHAR mail "NOT NULL"
+    BOOL is_active 
     list_role roles
     
   }
