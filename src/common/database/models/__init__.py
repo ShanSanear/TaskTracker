@@ -1,13 +1,30 @@
-from sqlalchemy import Column, Integer, String, Boolean
-from sqlalchemy.orm import relationship
+import ormar
 
-from src.common.database.database_engine import Base
+import databases
+import sqlalchemy
 
-class User(Base):
-    __tablename__ = "users"
-    id = Column(Integer, primary_key=True, index=True) # TODO Integer to UUID
-    name = Column(String, unique=True, index=True)
-    email = Column(String, unique=True, index=True)
-    hashed_password = Column(String) # TODO - remove it after testing
-    is_active = Column(Boolean, default=True)
+from common.database.config import settings
 
+database = databases.Database(settings.db_string)
+metadata = sqlalchemy.MetaData()
+class BaseMeta(ormar.ModelMeta):
+    metadata = metadata
+    database = database
+class User(ormar.Model):
+    class Meta(BaseMeta):
+        tablename = "users"
+
+    id = ormar.Integer(primary_key=True)  # TODO Integer to UUID
+    name = ormar.String(max_length=128, unique=True, nullable=False, )
+    email = ormar.String(max_length=128, unique=True, )
+    active = ormar.Boolean(default=True, nullable=False)
+
+class Issue(ormar.Model):
+    class Meta(BaseMeta):
+        tablename = "issue"
+
+    id = ormar.Integer(primary_key=True)
+    summary = ormar.String(max_length=256, nullable=False)
+
+
+engine = sqlalchemy.create_engine(settings.db_string)
