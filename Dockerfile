@@ -8,6 +8,3 @@ COPY pyproject.toml /code/
 
 RUN /root/.local/bin/poetry update
 RUN /root/.local/bin/poetry install
-
-
-COPY src/api /code/api
