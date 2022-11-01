@@ -23,3 +23,9 @@ async def shutdown():
 @api.get("/users/")
 async def read_users():
     return await User.objects.all()
+
+@api.post("/users/")
+async def create_user(user: User):
+    obj = await User.objects.create(name=user.name, email=user.email)
+    return obj
+
