@@ -2,11 +2,11 @@ from fastapi import FastAPI
 
 from common.database.models import User, database
 
-from .routers import users
+from .routers import users, issues
 
 api = FastAPI()
 api.include_router(users.router)
-
+api.include_router(issues.router)
 
 @api.get("/")
 def hello():

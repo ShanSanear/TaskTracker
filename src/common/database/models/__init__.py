@@ -7,9 +7,13 @@ from common.database.config import settings
 
 database = databases.Database(settings.db_string)
 metadata = sqlalchemy.MetaData()
+
+
 class BaseMeta(ormar.ModelMeta):
     metadata = metadata
     database = database
+
+
 class User(ormar.Model):
     class Meta(BaseMeta):
         tablename = "users"
@@ -18,6 +22,7 @@ class User(ormar.Model):
     name = ormar.String(max_length=128, unique=True, nullable=False, )
     email = ormar.String(max_length=128, unique=True, )
     active = ormar.Boolean(default=True, nullable=False)
+
 
 class Issue(ormar.Model):
     class Meta(BaseMeta):
