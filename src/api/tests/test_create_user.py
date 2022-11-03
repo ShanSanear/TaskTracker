@@ -1,30 +1,8 @@
-import pytest as pytest
 from fastapi.testclient import TestClient
-from sqlalchemy import create_engine
-from sqlalchemy.orm import sessionmaker
-import os
-
-os.environ["DB_ENGINE"] = "sqlite"
-from common.database.config import settings
-
-from common.database.models import BaseMeta
 
 from ..main import api
 
-SQLALCHEMY_DATABASE_URL = "sqlite:///./test.db"
-
-engine = create_engine(settings.db_string, connect_args={"check_same_thread": False})
-TestingSessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)
-
 client = TestClient(api)
-
-
-@pytest.fixture()
-def local_sqlite_dbn():
-    BaseMeta.metadata.create_all(bind=engine)
-    yield
-    BaseMeta.metadata.drop_all(bind=engine)
-
 
 def test_get_users(local_sqlite_dbn):
     new_account_name = "Name"
