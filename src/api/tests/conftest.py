@@ -12,7 +12,7 @@ engine = create_engine(settings.db_string, connect_args={"check_same_thread": Fa
 TestingSessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)
 
 
-@pytest.fixture(scope='session')
+@pytest.fixture()
 def local_sqlite_dbn():
     BaseMeta.metadata.create_all(bind=engine)
     yield

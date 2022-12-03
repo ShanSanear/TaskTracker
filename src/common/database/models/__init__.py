@@ -30,6 +30,7 @@ class Issue(ormar.Model):
 
     id = ormar.Integer(primary_key=True)
     summary = ormar.String(max_length=256, nullable=False)
+    description = ormar.String(max_length=10000, nullable=True)
 
 
 engine = sqlalchemy.create_engine(settings.db_string)

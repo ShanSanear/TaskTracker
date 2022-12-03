@@ -2,7 +2,6 @@ import logging
 from pprint import pprint
 
 from dynaconf import Dynaconf
-logging.basicConfig(level=logging.DEBUG)
 from pathlib import Path
 
 settings = Dynaconf(
