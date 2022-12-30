@@ -10,7 +10,7 @@ settings = Dynaconf(
 )
 
 def get_db_string_from_settings():
-    if settings.DB_ENGINE == "postgres":
+    if settings.DB_ENGINE == "postgresql":
         return f"{settings.DB_ENGINE}://{settings.POSTGRES_USER}:{settings.POSTGRES_PASSWORD}@" \
                f"{settings.DB_HOSTNAME}:{settings.DB_PORT}/{settings.POSTGRES_DB}"
     elif settings.DB_ENGINE == "sqlite":
