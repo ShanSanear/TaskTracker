@@ -1,4 +1,4 @@
-DB_ENGINE = "postgresql"
+DB_ENGINE = "postgres"
 DB_HOSTNAME = "db"
 DB_PORT = "5432"
 

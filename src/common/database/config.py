@@ -17,6 +17,7 @@ def get_db_string_from_settings():
         # TODO - logging
         print("Getting sqlite test database")
         return "sqlite:///./test.db"
+    raise ValueError(f"Unknown db_engine value: {settings.DB_ENGINE}")
 
 
 settings.db_string = get_db_string_from_settings()
