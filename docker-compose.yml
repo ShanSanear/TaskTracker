@@ -39,6 +39,18 @@ services:
       - ./secrets/db.env
     command: bash -c 'cd /code/src/common/database/alembic; /root/.local/bin/poetry run alembic upgrade head'
 
+  db_create_migration_file:
+      restart: "no"
+      build:
+        context: .
+      volumes:
+        - ./src:/code/src
+      depends_on:
+        - db
+      env_file:
+        - ./secrets/db.env
+      command: bash -c 'cd /code/src/common/database/alembic; /root/.local/bin/poetry run alembic revision --autogenerate -m "${REVISION_MESSAGE}"'
+
 
 volumes:
   postgres_data:
