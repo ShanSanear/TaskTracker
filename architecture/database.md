@@ -1,4 +1,5 @@
 ```mermaid
+%%{init: {'theme' : 'forest'}}%%
 erDiagram
 
   issues {
@@ -8,14 +9,15 @@ erDiagram
     DATE creation_date
     DATE modification_date
     state current_state
-    user reporter_id
+    user reporter_id "NOT NULL"
     user assignee_id
-    project project_id
+    project project_id "NOT NULL"
   }
   
   projects {
     NVARCHAR name "NOT NULL"
     NVARCHAR key "NOT NULL"
+    NVARCHAR description
     INTEGER project_id "AUTOINCREMENT"
   }
   
@@ -28,8 +30,8 @@ erDiagram
     NVARCHAR name "NOT NULL"
     NVARCHAR mail "NOT NULL"
     BOOL active 
+    NVARCHAR password "NOT NULL"
     list_role roles
-    
   }
   
   roles {
