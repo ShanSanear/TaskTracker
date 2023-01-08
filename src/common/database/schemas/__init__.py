@@ -47,7 +47,7 @@ class UserCreate(UserBase):
 
 class User(UserBase):
     id: int
-    is_active: bool
+    is_active: bool = True
 
     class Config:
         orm_mode = True
@@ -71,5 +71,5 @@ class IssueCreate(BaseModel):
 
 
 class IssueChange(BaseModel):
-   summary: str | None
-   description: str | None = None
+    summary: str | None
+    description: str | None = None
