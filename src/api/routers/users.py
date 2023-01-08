@@ -1,5 +1,8 @@
 from fastapi import APIRouter
+
+from api import crud
 from common.database.models import User
+from common.database import schemas
 
 router = APIRouter(
     prefix="/users",
@@ -9,11 +12,10 @@ router = APIRouter(
 
 
 @router.get("/")
-async def read_users():
-    return await User.objects.all()
+async def read_users() -> list[schemas.User]:
+    return await crud.get_users()
 
 
-@router.post("/")
-async def create_user(user: User):
-    obj = await User.objects.create(name=user.name, email=user.email)
-    return obj
+@router.post("/",)
+async def create_user(user: schemas.UserCreate):
+    return await crud.create_user(user)

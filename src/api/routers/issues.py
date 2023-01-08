@@ -1,6 +1,7 @@
 from http import HTTPStatus
 from fastapi import APIRouter
-from common.database.models import Issue
+from api import crud
+from common.database import schemas
 
 router = APIRouter(
     prefix="/issues",
@@ -9,15 +10,13 @@ router = APIRouter(
 )
 
 
-@router.post("/", status_code=HTTPStatus.CREATED, response_model=Issue)
-async def create_issue(issue: Issue):
-    obj = await Issue.objects.create(summary=issue.summary, description=issue.description)
+@router.post("/", status_code=HTTPStatus.CREATED, response_model=schemas.Issue)
+async def create_issue(issue: schemas.IssueCreate):
+    obj = await crud.create_issue(issue)
     return obj
 
 
-@router.patch("/{issue_id}", status_code=HTTPStatus.ACCEPTED, response_model=Issue)
-async def change_issue(issue_id: int, issue: Issue):
-    obj = await Issue.objects.get(id=issue_id)
-    update_data = issue.dict(exclude_unset=True)
-    await obj.update(**update_data)
+@router.patch("/{issue_id}", status_code=HTTPStatus.ACCEPTED, response_model=schemas.Issue)
+async def change_issue(issue_id: int, issue: schemas.IssueChange):
+    obj = await crud.change_issue(issue_id, issue)
     return obj

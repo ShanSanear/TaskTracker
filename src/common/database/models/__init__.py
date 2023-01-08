@@ -20,8 +20,19 @@ class User(ormar.Model):
 
     id = ormar.Integer(primary_key=True)  # TODO Integer to UUID
     name = ormar.String(max_length=128, unique=True, nullable=False, )
-    email = ormar.String(max_length=128, unique=True, )
+    email = ormar.String(max_length=128, unique=True, nullable=False )
     active = ormar.Boolean(default=True, nullable=False)
+    password = ormar.String(nullable=False, max_length=256)
+
+
+class Project(ormar.Model):
+    class Meta(BaseMeta):
+        tablename = "projects"
+
+    id = ormar.Integer(primary_key=True)
+    name = ormar.String(max_length=512, unique=True, )
+    key = ormar.String(max_length=128, unique=True, )
+    description = ormar.String(max_length=4096, nullable=True, )
 
 
 class Issue(ormar.Model):
